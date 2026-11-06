@@ -1,30 +1,13 @@
 import { Suspense } from 'react'
 import { getTestData } from '../../data'
+import { RequestTable } from './table'
 
 export default function ServerSideRenderedPage() {
+  const entries = getTestData()
+
   return (
     <Suspense fallback={null}>
-      <RequestTable />
+      <RequestTable entries={entries} />
     </Suspense>
-  )
-}
-
-async function RequestTable() {
-  const entries = await getTestData()
-
-  return (
-    <table>
-      <tbody>
-        {entries.map((entry) => (
-          <tr key={entry.id}>
-            <td>{entry.id}</td>
-            <td>{entry.name}</td>
-            <td>
-              <a href={`/server-side-rendered/${entry.id}`}>View →</a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
   )
 }
