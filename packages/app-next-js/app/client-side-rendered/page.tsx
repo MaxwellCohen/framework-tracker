@@ -1,12 +1,14 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-
-const ClientSideRenderedTable = dynamic(
-  () => import('./ClientSideRenderedTable'),
-  { ssr: false },
-)
+import { useEffect, useState, type ComponentType } from 'react'
+import ClientSideRenderedTable from './ClientSideRenderedTable'
 
 export default function ClientSideRenderedPage() {
-  return <ClientSideRenderedTable />
+  const [Table, setTable] = useState<ComponentType | null>(null)
+
+  useEffect(() => {
+    setTable(() => ClientSideRenderedTable)
+  }, [])
+
+  return Table ? <Table /> : null
 }

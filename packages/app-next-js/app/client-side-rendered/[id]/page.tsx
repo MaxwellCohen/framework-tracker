@@ -1,12 +1,14 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-
-const ClientSideRenderedDetail = dynamic(
-  () => import('./ClientSideRenderedDetail'),
-  { ssr: false },
-)
+import { useEffect, useState, type ComponentType } from 'react'
+import clientSideRenderedDetail from './ClientSideRenderedDetail'
 
 export default function ClientSideRenderedDetailPage() {
-  return <ClientSideRenderedDetail />
+  const [Detail, setDetail] = useState<ComponentType | null>(null)
+
+  useEffect(() => {
+    setDetail(() => clientSideRenderedDetail)
+  }, [])
+
+  return Detail ? <Detail /> : null
 }
